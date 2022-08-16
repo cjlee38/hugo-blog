@@ -29,7 +29,7 @@ title: '# 깃 서브모듈 트러블슈팅'
 'public' already exists in the index
 ```
 
-뭔가 이상합니다. `public`에 대한 정보를 이미 가져온 것일까요 ? 이는 반만 맞습니다. 정확히는, submodule이 존재한다는 것, 그리고 그 녀석의 이름이 `public` 이라는 것 까지는 알고 있습니다. 코드를 한 곳에서 관리하는 것이 효율적이기 때문에, submodule의 소스코드는 별도의 repository에서 관리하는 상태입니다. 따라서 서브가 이미 존재하니, 깃은 '인덱스에 이미 존재한다' 라고 대답합니다. 따라서 `git submodule status` 를 입력하면 다음과 같습니다.
+뭔가 이상합니다. `public`에 대한 정보를 이미 가져온 것일까요 ? 이는 반만 맞습니다. 정확히는, submodule이 존재한다는 것, 그리고 그 녀석의 이름이 `public` 이라는 것 까지는 알고 있습니다. 코드를 한 곳에서 관리하는 것이 효율적이기 때문에, submodule의 소스코드는 별도의 repository에서 관리하는 상태입니다. 따라서 서브가 이미 존재하니, 깃은 '인덱스에 이미 존재한다' 라고 대답합니다. `git submodule status` 를 입력하면 다음과 같습니다.
 
 ```bash
 git submodule status 
