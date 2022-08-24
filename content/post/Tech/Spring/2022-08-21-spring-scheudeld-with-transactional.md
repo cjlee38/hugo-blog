@@ -2,13 +2,13 @@
 categories: spring
 date: "2022-08-21T00:00:00Z"
 tags: ['spring', 'transctional', 'scheduled']
-title: '스프링 @Scheduled 와 @Transactional에 얽힌 이야기'
+title: '# 스프링 @Scheduled 와 @Transactional에 얽힌 이야기'
 author: 'cjlee38'
 ---
  
 
 # 0. 서론
-팀 프로젝트를 진행하면서, 특정 시간에 맞추어 Entity의 상태를 업데이트하고, 슬랙 메시지를 발송하는 기능을 개발하고 있었습니다. 여러가지 선택지 중에서, 러닝커브나 유지보수성을 감안하여 스프링의 스케줄링 기능을 활용하기로 했고, 약간의 학습 이후 본격적인 개발에 착수했습니다. 
+팀 프로젝트를 진행하면서, 특정 시간에 맞추어 Entity의 상태를 업데이트하고, 슬랙 메시지를 발송하는 기능을 개발하고 있었습니다. 제이슨이 추천해주신 여러가지 선택지 중에서, 러닝커브나 유지보수성을 감안하여 스프링의 스케줄링 기능을 활용하기로 결정했고, 약간의 학습 이후 본격적인 개발에 착수했습니다. 
 
 코드는 대략 다음과 같이 구성되어 있었습니다.
 
@@ -60,9 +60,9 @@ Hibernate:
 제가 class level에 분명히 `@Transactional` 어노테이션을 붙였음에도 불구하고, 메소드를 호출할 때에는 `Transaction` 을 생성하는 로그가 찍히지 않았습니다. 대신, 위와 같이 조회 쿼리일때에는 "트랜잭션이 필요없다" 라는 로그만 뱉어주고 있었죠. 게다가 더욱 아이러니한 점은, `save` 메소드를 호출할 때에는 트랜잭션을 잠깐 얻고, 쿼리를 날린 후 곧바로 종료시켜버리고 있었습니다.
 
 # 2. 의문 하나.
-문제를 해결하기에 앞서, 가장 먼저 의문이 들었던 부분은 왜 `save`를 할 때는 `transaction`이 동작하고, `findAllTobeClosed` 와 같은 조회 쿼리는 동작하지 않았을까요? 
+문제를 해결하기에 앞서, 가장 먼저 의문이 들었던 부분은 ?왜 `save`를 할 때는 `transaction`이 동작하고, `findAllTobeClosed` 와 같은 조회 쿼리는 동작하지 않았을까?" 였습니다.
 
-그 원인은, JPA가 조회하는 로직일때는 `transaction`이 필요하지 않기 때문입니다. 다음은 [한 스택오버플로우 글](https://stackoverflow.com/questions/21672454/application-managed-jpa-when-is-transaction-needed)에서 인용한 JPA spec의 일부입니다.
+그 원인은, JPA가 조회하는 로직일때는 `transaction`이 필요하지 않기 때문입니다. 다음은 [한 스택오버플로우 글](https://stackoverflow.com/questions/21672454/application-managed-jpa-when-is-transaction-needed)에서 인용한 JTA spec의 일부입니다.
 
 > The persist, merge, remove, and refresh methods must be invoked within a transaction context when an entity manager with a transaction-scoped persistence context is used. If there is no transaction context, the javax.persistence.TransactionRequiredException is thrown.
 
@@ -70,7 +70,7 @@ Hibernate:
 
 즉, 조회로직은 transaction context 내에서 일어날 필요가 없다는 뜻입니다. 그렇다면 `save`는 어떨까요? 이는 `SimpleJpaRepository`를 살펴보면 알 수 있습니다.
 
-SimpleJpaRepository는 Repository 인터페이스의 최상위 구현체이자, CrudRepository의 default 구현체입니다. 우리가 Repository 혹은 JpaRepository를 상속하게 되면, `JpaRepositoryFactoryBean`가 `SimpleJpaRepository` 를 상속하여 프록시객체로 우리가 만든 인터페이스의 구현체를 생성합니다. 
+SimpleJpaRepository는 Repository 인터페이스의 최상위 구현체이자, CrudRepository의 default 구현체입니다. 우리가 Repository 혹은 JpaRepository를 상속한 인터페이스를 만들면, `JpaRepositoryFactoryBean`가 `SimpleJpaRepository` 를 상속하여 만든 프록시 객체로 우리가 만든 인터페이스의 구현체를 생성합니다. 
 
 ![](/assets/images/2022-08-24-13-20-01.png)
 
@@ -119,13 +119,12 @@ TransactionAttributeSource transactionAttributeSource() {
 ```
 
 
-## 3. 부록.
+# 4. 부록.
 스케줄링이 어떻게 동작하는지 한번 코드로 살펴보았습니다.
 
-![](/assets/images/2022-08-22-23-26-19.png)
+스프링에는 의존관계를 주입하며 bean을 생성하는 `AutowireCapableBeanFactory`가 있습니다. 아래 위 코드는 해당 인터페이스의 추상 클래스인 `AbstractAutowireCapableBeanFactory` 중 일부입니다 (line 450)
 
-스프링에서 의존관계를 주입하며 bean을 생성하는 `AutowireCapableBeanFactory`가 있고,
-위 코드는 해당 인터페이스의 추상 클래스인 `AbstractAutowireCapableBeanFactory` 중 일부입니다 (line 450)
+![](/assets/images/2022-08-22-23-26-19.png)
 
 위 코드에서 알 수 있다시피, bean을 등록하고 난 뒤, `post-processor`에 의해 후처리 작업을 진행합니다. 후처리 작업은 post-processor에 의해 처리된 결과가 `null`이 아니라면 계속해서 바꿔치기를 진행합니다.
 
@@ -154,23 +153,40 @@ TransactionAttributeSource transactionAttributeSource() {
 
 당장은 빨간 박스로 친 부분만 실행된다는 점에 유의해서 살펴보시면 됩니다. 새로 등록된 Task이므로, `CronTask` 리스트에 등록하면서, 동시에 `unresolvedTask`에 등록합니다.
 
-여기까지 진행한 다음, 애플리케이션이 실행된 이후를 확인해보겠습니다. 애플리케이션이 실행되고나면, `SimpleApplicationEventMultiCaster` 의 `multicast` 를 호출해 `ApplicationListener` 에게 `invoke` 할 것을 명령합니다. 
+여기까지 진행한 다음, 빈 초기화가 모두 끝난 이후를 확인해보겠습니다. 애플리케이션이 실행되고나면, `SimpleApplicationEventMultiCaster` 의 `multicast` 를 호출해 `ApplicationListener` 에게 `invoke` 할 것을 명령합니다. 
 
 ![](/assets/images/2022-08-23-00-13-43.png)
 
-그리고, 이 `Listener` 중 하나가 방금 보았던 `ScheduledAnnotationBeanPostProcessor` 입니다. 
+이 `Listener` 중 하나가 방금 보았던 `ScheduledAnnotationBeanPostProcessor` 입니다. 그리고 `invoke()`는 `onApplicationEvent()`를, `onApplicationEvent()`는 `finishRegistration()`을 순차적으로 호출합니다. 이 때, 우리가 등록한 `SchedulingConfigurer` Configuration이 있다면 이를 등록합니다.
 
-그리고 `invoke()`는 `onApplicationEvent()`를, `onApplicationEvent()`는 `finishRegistration()`을 순차적으로 호출합니다.(이 때, 우리가 등록한 `SchedulingConfigurer` Configuration이 있다면 이를 등록합니다.)
+![](/assets/images/2022-08-25-00-33-22.png)
 
-그리고 `finishRegistration()`은 앞서 보았던 `registrar`의 `afterPropertiesSet()` 을, 그리고 이는 `registrar` 내부의 `scheduleTasks()`를 호출합니다.
+즉, 위의 `List<SchedulingConfigurer> configures` 에 아래 코드와 같이 우리가 정의한 configuration이 들어갑니다.
+
+![](/assets/images/2022-08-25-00-44-35.png)
+
+
+그리고 `finishRegistration()`은 최종적으로 `this.registrar.afterPropertiesSet();` 을, 그리고 이는 `registrar` 내부의 `scheduleTasks()`를 호출합니다.
 
 ![](/assets/images/2022-08-23-00-29-39.png)
 
-가장 먼저, taskScheduler에 `new ConcurrentTaskScheduler` 를 넣어주는 것을 확인하고, cron 쪽을 살펴봅시다. 그러면 앞서 익숙한 메소드명이 보입니다. 바로 `scheduleCronTask()` 입니다. 
+그러면 앞서 익숙한 메소드명이 보입니다. 바로 `scheduleCronTask()` 입니다. 
 
 ![](/assets/images/2022-08-23-00-31-08.png)
 
-자, 드디어 마무리입니다. `taskScheduler`가 null이 아니기때문에(ConcurrentTaskScheduler), future에 `ScheduledFuture` 를 넣어주게 되고, 이로인해 주기적으로 작업이 수행됩니다. (`ScheduledFuture`는 java.util.concurrent 패키지에 있습니다.)
+`taskScheduler`가 null이 아니기때문에(앞서 커스텀 정의한 configuration에서 `ThreadPoolTaskScheduler`을 넣어줬으니까요.), future에 `ScheduledFuture` 를 넣어줍니다.
 
+![](/assets/images/2022-08-25-01-01-21.png)
 
+넣어준 `ScheduledFuture` 의 구현체는 `ReschedulingRunnable`로, 자기 자신이 실행해야할 시각을 설정합니다. 그리고 java에 의해 설정된 시각에 동작합니다.
 
+![](/assets/images/2022-08-25-01-03-59.png)
+
+자, 이제 마무리입니다. java에 의해 `run` 메소드가 호출되면, 해야 할 일을 수행하고, triggerContext에 의해 다음 실행 시각을 다시 계산한뒤 `schedule` 을 다시 호출합니다.
+
+![](/assets/images/2022-08-25-01-01-21.png)
+
+# 5. 마무리.
+사실 처음 작성했던 코드가 의도한대로 동작하지 않았던 문제의 해결방법은 그리 어렵지 않았습니다. 단순히 `public` 접근제어자를 붙이기만 해주면 되니까요. 하지만 그 이면에서 왜 이런 문제가 발생했는지, `@Scheduled`가 어떻게 동작하는지 등의 궁금증을 해결할 수 있는 계기가 되었습니다.
+
+트러블슈팅과 관련해서 레퍼런스도 많이 발견하지 못했는데, 혹여라도 난항을 겪는 분들께 도움이 되었길 바라겠습니다. 감사합니다.
