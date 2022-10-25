@@ -1,6 +1,6 @@
 ---
 categories: architecture
-date: "2022-10-19T00:00:00Z"
+date: "2022-10-25T00:00:00Z"
 tags: ['layered-architecture']
 title: '# 개인적인, 도메인과 레이어드 아키텍처'
 draft: false
