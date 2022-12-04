@@ -1,6 +1,6 @@
 ---
 categories: java
-date: "2022-11-13T00:00:00Z"
+date: "2022-12-3T00:00:00Z"
 tags: ['java', 'jvm']
 title: '# Java의 static 메소드는 왜 overriding이 안되나요?'
 draft: false
