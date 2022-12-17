@@ -1,8 +1,8 @@
 ---
-categories: diary
-date: "2022-02-23T00:00:00Z"
-tags: ['DIARY']
-title: '타이틀'
+categories: none
+date: "2122-12-31T00:00:00Z"
+tags: []
+title: ''
 draft: true
 ---
 
