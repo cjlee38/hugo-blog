@@ -265,6 +265,32 @@ public void println(String x) {
 
 아래 코드는 이펙티브 자바에서 보인 `StopThread` 의 `synchronized` 키워드를 이용한 개선 버전인데, 이 부분도 자세히 보면 처음에는 “왜 `synchronized` 키워드를 붙인게 효과가 있지?” 라는 생각이 들었다가, 스레드 간 통신을 지원한다는 점을 떠올리면, 곧 고개를 끄덕일 수 있을 것이다.
 
+```java
+public class StopThreadSynchronized {
+    private static boolean stopRequested;
+
+	private static synchronized void requestStop() {
+		stopRequested = true;
+	}
+
+	private static synchronized boolean stopRequested() {
+		return stopRequested;
+	}
+
+    public static void main(String[] args) throws InterruptedException {
+        Thread backgroundThread = new Thread(() -> {
+            int i = 0;
+            while (!stopRequested())
+                i++;
+        });
+        backgroundThread.start();
+
+        TimeUnit.SECONDS.sleep(1);
+        requestStop();
+    }
+}
+```
+
 ### final
 
 자바에서 `final`은 변수에 대한 재할당을 막는 역할로 널리 알려져 있다. 하지만 final 키워드 또한 `happens-before` 관계와 연관이 있다. 다음 코드를 보자.
