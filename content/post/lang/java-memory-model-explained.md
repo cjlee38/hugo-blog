@@ -2,7 +2,7 @@
 categories: java
 date: "2023-03-05T00:00:00Z"
 tags: ['java', 'jmm']
-title: '# Java Memory Model explained (feat. Effective Java, Item 78)'
+title: 'Java Memory Model explained (feat. Effective Java, Item 78)'
 draft: false
 ---
 
