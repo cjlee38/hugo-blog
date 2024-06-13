@@ -17,10 +17,7 @@
     <loc>https://cjlee.io/blog/categories/git/</loc>
     <lastmod>2024-06-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://cjlee.io/blog/post/git-absorb/</loc>
-    <lastmod>2024-06-05T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://cjlee.io/blog/post/</loc>
+    <loc>https://cjlee.io/blog/git-absorb/</loc>
     <lastmod>2024-06-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cjlee.io/blog/tags/</loc>
@@ -35,7 +32,7 @@
     <loc>https://cjlee.io/blog/tags/oop/</loc>
     <lastmod>2023-11-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://cjlee.io/blog/post/oop-is-psychotic-disorder/</loc>
+    <loc>https://cjlee.io/blog/oop-is-psychotic-disorder/</loc>
     <lastmod>2023-11-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cjlee.io/blog/tags/java/</loc>
@@ -44,7 +41,7 @@
     <loc>https://cjlee.io/blog/categories/java/</loc>
     <lastmod>2023-03-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://cjlee.io/blog/post/java-memory-model-explained/</loc>
+    <loc>https://cjlee.io/blog/java-memory-model-explained/</loc>
     <lastmod>2023-03-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cjlee.io/blog/tags/jmm/</loc>
@@ -68,7 +65,7 @@
     <loc>https://cjlee.io/blog/tags/mysql/</loc>
     <lastmod>2022-10-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://cjlee.io/blog/post/encoding-with-mysql/</loc>
+    <loc>https://cjlee.io/blog/encoding-with-mysql/</loc>
     <lastmod>2022-10-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cjlee.io/blog/tags/platform/</loc>
@@ -83,7 +80,7 @@
     <loc>https://cjlee.io/blog/categories/spring/</loc>
     <lastmod>2022-08-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://cjlee.io/blog/post/spring-environment-seperation/</loc>
+    <loc>https://cjlee.io/blog/spring-environment-seperation/</loc>
     <lastmod>2022-08-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://cjlee.io/blog/tags/kotlin/</loc>
@@ -92,7 +89,7 @@
     <loc>https://cjlee.io/blog/categories/kotlin/</loc>
     <lastmod>2022-06-09T14:25:36+00:00</lastmod>
   </url><url>
-    <loc>https://cjlee.io/blog/post/kotlin-property/</loc>
+    <loc>https://cjlee.io/blog/kotlin-property/</loc>
     <lastmod>2022-06-09T14:25:36+00:00</lastmod>
   </url><url>
     <loc>https://cjlee.io/blog/tags/property/</loc>
@@ -104,7 +101,7 @@
     <loc>https://cjlee.io/blog/categories/python/</loc>
     <lastmod>2021-09-16T22:05:00+00:00</lastmod>
   </url><url>
-    <loc>https://cjlee.io/blog/post/python-property/</loc>
+    <loc>https://cjlee.io/blog/python-property/</loc>
     <lastmod>2021-09-16T22:05:00+00:00</lastmod>
   </url><url>
     <loc>https://cjlee.io/blog/search/</loc>
