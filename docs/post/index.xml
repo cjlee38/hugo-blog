@@ -33,14 +33,6 @@ fixup commit 먼저 git absorb 를 알기 전에 먼저 알아둬야 하는 것�
 public class StopThread { private static boolean stopRequested; public static void main(String[] args) throws InterruptedException { Thread backgroundThread = new Thread(() -&amp;gt; { int i = 0; while (!stopRequested) i++; }); backgroundThread.start(); TimeUnit.SECONDS.sleep(1); stopRequested = true; } } 위 코드를 읽어보면, stopRequested 가 1초 뒤에 true 로 바뀌었으므로 백그라운드 스레드는 종료되어야 할 것 같지만, 실제로 무한 루프를 돌게 된다.</description>
     </item>
     <item>
-      <title>도메인과 레이어드 아키텍처</title>
-      <link>https://cjlee.io/blog/post/domain-layered-architecture/</link>
-      <pubDate>Tue, 25 Oct 2022 00:00:00 +0000</pubDate>
-      <guid>https://cjlee.io/blog/post/domain-layered-architecture/</guid>
-      <description>약 8개월 간의 우아한테크코스를 진행하면서 배우고, 또 고민한 것 중 하나는, 소프트웨어의 책임을 어떻게 분리할 것인가에 관한 것이었다. 레벨 1 당시에는 콘솔 프로그래밍으로 도메인을 어떻게 구성할 것인지에 대해 다루었다. 레벨 2 로 넘어와서는 Spark Java 와 Spring을 추가하면서 도메인을 안정적으로 만드는 것이 왜 중요한지에 대해 학습하였고, 레벨 3에 이르러서는 JPA를 사용하면서 데이터베이스를 연결했을 때 겪는 문제점들을 ORM이 어떻게 풀어나가는지 배웠다.
-정리하자면, 어떻게 하면 도메인을 잘 만들 수 있는지, 그리고 이 도메인을 외부 환경으로부터 어떻게 격리하여 흔들리지 않게 만들 수 있는지를 학습하는 과정이었다.</description>
-    </item>
-    <item>
       <title>문자 인코딩과 MySQL varchar</title>
       <link>https://cjlee.io/blog/post/encoding-with-mysql/</link>
       <pubDate>Sun, 02 Oct 2022 00:00:00 +0000</pubDate>
