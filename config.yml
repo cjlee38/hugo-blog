@@ -1,7 +1,7 @@
 baseURL: https://cjlee.io/blog
 languageCode: en-us
 title: cjlee38
-theme: "PaperMod"
+theme: "paper"
 
 enableRobotsTXT: true
 buildDrafts: false
@@ -18,7 +18,6 @@ params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
   title: cjlee38
   description: "ExampleSite description"
-  keywords: [Blog, Portfolio, PaperMod]
   author: cjlee38
   # author: ["Me", "You"] # multiple authors
   # images: ["<link or path of image for opengraph, twitter-cards>"]
